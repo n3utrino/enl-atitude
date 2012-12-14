@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="ch.n3utrino.enlatitude"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="14"/>
+    <permission
+            android:name="ch.n3utrino.enlatitude.permission.MAPS_RECEIVE"
+            android:protectionLevel="signature"/>
+    <uses-permission android:name="ch.n3utrino.enlatitude.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true"/>
+
+    <application
+            android:label="@string/app_name"
+            android:icon="@drawable/ic_launcher">
+        <activity
+                android:name="EnLatitude"
+                android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <service android:name=".services.UpdateService"/>
+        <receiver android:name=".services.UpdateTrigger">
+            <intent-filter>
+                <action android:name="enlatitude.client.android.update"/>
+            </intent-filter>
+        </receiver>
+
+
+        <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="#####YOUR MAPS KEY######"/>
+    </application>
+</manifest>

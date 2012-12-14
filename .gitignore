@@ -5,5 +5,18 @@
 *.war
 *.ear
 
+#Gradle#
+server/.gradle
+
+#Android#
+/app/local.properties
+/app/gen/*
+*.apk
+
+#Intellij#
+*.iml
+*.ipr
+*.iws
+.idea/
 /out/*
 /.idea/workspace.xml
