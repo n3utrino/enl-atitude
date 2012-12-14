@@ -3,14 +3,18 @@ package ch.n3utrino.enlatitude;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.widget.EditText;
 import ch.n3utrino.enlatitude.common.User;
 import ch.n3utrino.enlatitude.services.UpdateService;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -100,8 +104,8 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
         map.clear();
 
-        for(User user:reply.values()){
-            map.addMarker(new MarkerOptions().position(new LatLng(user.getLocation().getLat(),user.getLocation().getLon())).title(user.getName()));
+        for (User user : reply.values()) {
+            map.addMarker(new MarkerOptions().position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon())).title(user.getName()));
         }
 
     }
@@ -109,9 +113,33 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     protected void onResume() {
         super.onResume();
-        if(ready){
+        if (ready) {
             doBindService();
         }
+
+        Handler mapZoomHandler = new Handler();
+
+
+
+        mapZoomHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Location loc = map.getMyLocation();
+
+                if (loc != null) {
+                    LatLng myLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(15).build();
+
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+            }
+        }
+
+
+                , 2000);
+
+
     }
 
     @Override
