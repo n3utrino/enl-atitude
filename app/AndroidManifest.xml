@@ -22,13 +22,14 @@
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher">
         <activity
-                android:name="EnLatitude"
+                android:name=".ui.EnLatitude"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.SettingsActivity"/>
         <service android:name=".services.UpdateService"/>
         <receiver android:name=".services.UpdateTrigger">
             <intent-filter>

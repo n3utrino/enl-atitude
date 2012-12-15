@@ -1,4 +1,4 @@
-package ch.n3utrino.enlatitude;
+package ch.n3utrino.enlatitude.services;
 
 import android.util.Log;
 import com.google.gson.Gson;

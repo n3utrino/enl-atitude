@@ -4,7 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import ch.n3utrino.enlatitude.EnLatitude;
+import ch.n3utrino.enlatitude.ui.EnLatitude;
 import ch.n3utrino.enlatitude.R;
 
 public class NotificationUtil {

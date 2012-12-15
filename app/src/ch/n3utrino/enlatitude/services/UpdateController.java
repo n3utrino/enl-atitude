@@ -2,7 +2,7 @@ package ch.n3utrino.enlatitude.services;
 
 import android.location.Location;
 import android.os.AsyncTask;
-import ch.n3utrino.enlatitude.Client;
+import ch.n3utrino.enlatitude.services.Client;
 import ch.n3utrino.enlatitude.Constants;
 import ch.n3utrino.enlatitude.common.UpdateReply;
 import ch.n3utrino.enlatitude.common.UpdateRequest;

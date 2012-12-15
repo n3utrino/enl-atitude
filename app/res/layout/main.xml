@@ -8,7 +8,7 @@
           map:cameraTargetLat="47.493284"
           map:cameraTargetLng="8.499678"
           map:cameraTilt="30"
-          map:mapType="terrain"
+          map:mapType="normal"
           map:uiCompass="true"
           map:uiRotateGestures="true"
           map:uiScrollGestures="true"

@@ -1,4 +1,4 @@
-package ch.n3utrino.enlatitude;
+package ch.n3utrino.enlatitude.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,13 +7,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
+import ch.n3utrino.enlatitude.EnlAtitudePreferences;
+import ch.n3utrino.enlatitude.R;
 import ch.n3utrino.enlatitude.common.User;
 import ch.n3utrino.enlatitude.services.UpdateService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,6 +27,7 @@ import java.util.Map;
 
 public class EnLatitude extends Activity implements UpdateService.LocationUpdateListener {
 
+    private static final String CAMERA_POSITION = "cameraPosition";
     private GoogleMap map;
     private boolean ready = true;
 
@@ -53,6 +59,8 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     private UpdateService mUpdateService;
     private boolean mIsBound;
 
+    private CameraPosition mCameraPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +69,13 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         GoogleMapOptions options = new GoogleMapOptions();
         options.scrollGesturesEnabled(true).zoomControlsEnabled(false).mapType(GoogleMap.MAP_TYPE_NORMAL).compassEnabled(true);
 
-
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         map.setMyLocationEnabled(true);
+
+        if(savedInstanceState != null){
+            mCameraPosition = (CameraPosition) savedInstanceState.get(CAMERA_POSITION);
+        }
 
         mPreferences = new EnlAtitudePreferences(this);
 
@@ -73,6 +84,51 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
             ready = false;
         }
 
+        Handler mapZoomHandler = new Handler();
+
+        mapZoomHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Location loc = map.getMyLocation();
+
+                if (loc != null) {
+                    LatLng myLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(15).build();
+
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+            }
+        }
+
+                , 2000);
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu,menu);
+
+        return true;
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettings(){
+        mUpdateService.stopUpdates();
+        this.startActivity(new Intent(this,SettingsActivity.class));
     }
 
     private void doBindService() {
@@ -105,7 +161,10 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         map.clear();
 
         for (User user : reply.values()) {
-            map.addMarker(new MarkerOptions().position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon())).title(user.getName()));
+            map.addMarker(new MarkerOptions().draggable(false)
+                    .position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon()))
+                    .title(user.getName())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
 
     }
@@ -117,29 +176,9 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
             doBindService();
         }
 
-        Handler mapZoomHandler = new Handler();
-
-
-
-        mapZoomHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Location loc = map.getMyLocation();
-
-                if (loc != null) {
-                    LatLng myLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(15).build();
-
-                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }
-            }
+        if(mCameraPosition != null){
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
         }
-
-
-                , 2000);
-
-
     }
 
     @Override
@@ -161,7 +200,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         alert.setTitle("Ingress Username");
         alert.setMessage("Enter your Ingress username");
 
-// Set an EditText view to get user input
+        // Set an EditText view to get user input
         final EditText input = new EditText(this);
         alert.setView(input);
 
@@ -185,4 +224,12 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(CAMERA_POSITION, map.getCameraPosition());
+
+
+    }
 }
