@@ -106,7 +106,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu,menu);
 
@@ -172,7 +172,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     protected void onResume() {
         super.onResume();
-        if (ready) {
+        if (ready && !mIsBound) {
             doBindService();
         }
 
@@ -190,7 +190,9 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        mUpdateService.stopUpdates();
+        if(mUpdateService != null){
+            mUpdateService.stopUpdates();
+        }
     }
 
     private void showUsernameSelectDialog() {

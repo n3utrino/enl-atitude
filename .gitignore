@@ -14,9 +14,7 @@ server/.gradle
 *.apk
 
 #Intellij#
-*.iml
-*.ipr
 *.iws
-.idea/
 /out/*
 /.idea/workspace.xml
+/.idea/tasks.xml

@@ -33,6 +33,8 @@ public class UpdateTrigger extends BroadcastReceiver implements LocationControll
         passiveLocationController = new LocationController(context,this);
 
         //Wait for 60 seconds stop after that.
+
+        //TODO: if the alarmmanager gets stopped while this is running, the event gets rescheduled. need to handle this
         Handler stopHandler = new Handler();
         stopHandler.postDelayed(new Runnable() {
             @Override

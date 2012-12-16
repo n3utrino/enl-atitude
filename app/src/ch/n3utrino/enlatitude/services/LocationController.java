@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class LocationController {
 
-    public static final int GPS_FIX_WAIT_TIME = 60000;
+    public static final int GPS_FIX_WAIT_TIME = 1*60*1000; //wait one minute to find gps
     private LocationManager mLocationManager;
     private Context mContext;
     private LocationControllerCallback mCallback;

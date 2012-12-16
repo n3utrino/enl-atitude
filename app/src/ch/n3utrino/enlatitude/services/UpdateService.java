@@ -182,8 +182,9 @@ public class UpdateService extends Service implements LocationController.Locatio
             mLocationController.stop();
 
             mAlarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime(),
-                    5 * 60 * 1000, alarmManagerPendingIntent);
+                    SystemClock.elapsedRealtime()+5*60*1000, //Trigger in 5 Minutes
+                    5 * 60 * 1000, //Every 5 Minutes
+                    alarmManagerPendingIntent);
 
         }
     }
