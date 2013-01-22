@@ -1,7 +1,7 @@
 *.class
 
 # Package Files #
-*.jar
+
 *.war
 *.ear
 
@@ -18,3 +18,7 @@ server/.gradle
 /out/*
 /.idea/workspace.xml
 /.idea/tasks.xml
+
+
+#Local Config#
+server/gaeConfig.gradle

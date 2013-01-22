@@ -1,0 +1,6 @@
+gae{
+    appcfg {
+        email = 'yourEmail'
+        password = 'andyourPassword'
+    }
+}
