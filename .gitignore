@@ -5,8 +5,11 @@
 *.war
 *.ear
 
+
+*/build
+
 #Gradle#
-server/.gradle
+.gradle
 
 #Android#
 /app/local.properties

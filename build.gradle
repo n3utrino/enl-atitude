@@ -1,0 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-gae-plugin:0.8'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven{
+        url 'http://oss.sonatype.org/content/groups/jetty/'
+    }
+
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
