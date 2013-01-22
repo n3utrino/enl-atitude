@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/enlatitude.iml" filepath="$PROJECT_DIR$/enlatitude.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/lib/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/app/lib/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
     </modules>
