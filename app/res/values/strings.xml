@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EnlAtitude</string>
+    <string name="just_now">Gerade eben</string>
+    <string name="minutes_ago">Vor %1$d Minuten</string>
 
 
 </resources>

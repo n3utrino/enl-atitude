@@ -7,6 +7,7 @@ public class User {
     private Location location;
 
     private long lastUpdate;
+    private long lastUpdateSince;
 
     public String getName() {
         return name;
@@ -41,4 +42,15 @@ public class User {
     public void setLastUpdate(long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public long getLastUpdateSince() {
+        return lastUpdateSince;
+    }
+
+    public void setLastUpdateSince(long lastUpdate) {
+        this.lastUpdateSince = lastUpdate;
+    }
+
 }
+
+

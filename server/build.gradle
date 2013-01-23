@@ -60,7 +60,7 @@ gae {
 
     appcfg {
         app {
-            id = 'on-therun'
+            id = 'enl-atitude'
             version = 1
         }
     }

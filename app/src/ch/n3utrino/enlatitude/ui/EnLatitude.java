@@ -161,10 +161,14 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         map.clear();
 
         for (User user : reply.values()) {
+
+            EnLDrawable marker = new EnLDrawable(user,getResources());
+
             map.addMarker(new MarkerOptions().draggable(false)
                     .position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon()))
                     .title(user.getName())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    .icon(BitmapDescriptorFactory.fromBitmap(marker.getBitmap())));
+
         }
 
     }
@@ -217,7 +221,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                showUsernameSelectDialog();
             }
         });
 

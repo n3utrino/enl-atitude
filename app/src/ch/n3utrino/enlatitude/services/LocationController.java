@@ -73,7 +73,7 @@ public class LocationController {
                     case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
                         gpsTries++;
                         for(GpsSatellite satellite:satellites){
-                            Log.d(TAG,satellite.toString());
+                           // Log.d(TAG,satellite.toString());
                             foundSatelite = true;
                         }
 
@@ -82,7 +82,7 @@ public class LocationController {
                             LocationController.this.stop();
                         }
 
-                       Log.d(TAG, "Gps SatelliteStatus");
+
                         break;
 
 

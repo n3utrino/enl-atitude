@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 
 @Produces("application/json")
@@ -20,10 +21,14 @@ public class MapResource {
 
     private Gson gson = new Gson();
     private DataAccessor dataAccessor = DataAccessor.getInstance();
+    private static final Logger log = Logger.getLogger(MapResource.class.getName());
+
 
     @POST
     @Path("/update/")
     public String update(String updateRequest) {
+
+        log.info(updateRequest);
 
         UpdateRequest requestObject = gson.fromJson(updateRequest, UpdateRequest.class);
         User theUser =  requestObject.getUser();
@@ -39,6 +44,7 @@ public class MapResource {
 
         for(User user:dataAccessor.getUsers().values()){
             if(System.currentTimeMillis() - user.getLastUpdate() < 30*60*1000){
+                user.setLastUpdateSince(System.currentTimeMillis() - user.getLastUpdate());
                 replyMap.put(user.getUuid(),user);
             } else {
                removeMap.add(user);
