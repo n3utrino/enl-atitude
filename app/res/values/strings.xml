@@ -16,5 +16,7 @@
     <string name="settings_proxy_alert">Proximity Alert</string>
     <string name="settings_proxy_alert_summary">Enable this to get notified if a fellow Ingress player is nearby
     </string>
+    <string name="settings_proxy_distance">Alert distance</string>
+    <string name="settings_proxy_distance_hint">Choose the distance to trigger the proximity alert</string>
 
 </resources>

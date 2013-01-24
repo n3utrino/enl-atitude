@@ -238,7 +238,7 @@ public class LocationController {
         PendingIntent proximityIntent = PendingIntent.getBroadcast(this.mContext, rand.nextInt() , intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         proxyIntents.put(user.getUuid(),proximityIntent);
-        mLocationManager.addProximityAlert(user.getLocation().getLat(),user.getLocation().getLon(),200,5*60*1000,proximityIntent);
+        mLocationManager.addProximityAlert(user.getLocation().getLat(),user.getLocation().getLon(),mPrefs.getProxyDistance(),5*60*1000,proximityIntent);
 
     }
 

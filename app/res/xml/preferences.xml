@@ -17,6 +17,17 @@
                 android:key="proxyAlert"
                 android:defaultValue="true"
                 />
+
+        <ListPreference
+                android:key="proxy_distance"
+                android:title="@string/settings_proxy_distance"
+                android:summary="@string/settings_proxy_distance_hint"
+                android:defaultValue="200"
+                android:entries="@array/proxy_distances"
+                android:entryValues="@array/proxy_distances_values"
+                android:dependency="proxyAlert"
+                />
+
     </PreferenceCategory>
 
 

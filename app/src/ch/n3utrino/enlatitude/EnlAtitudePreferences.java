@@ -53,4 +53,8 @@ public class EnlAtitudePreferences {
     public boolean proxyAlertEnabled() {
         return mPreferences.getBoolean("proxyAlert",true);
     }
+
+    public int getProxyDistance() {
+        return mPreferences.getInt("proxy_distance",200);
+    }
 }
