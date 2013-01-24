@@ -16,8 +16,8 @@ public class NotificationUtil {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_stat_ingress)
-                        .setContentTitle("Sharing Location")
-                        .setContentText("Sending updates").setOngoing(true);
+                        .setContentTitle(context.getString(R.string.sharing_location))
+                        .setContentText(context.getString(R.string.sending_updates)).setOngoing(true);
 
         Intent resultIntent = new Intent(context, EnLatitude.class);
 

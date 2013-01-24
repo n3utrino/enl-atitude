@@ -34,7 +34,7 @@ webAppDirName = 'webapp'
 dependencies {
 
     gaeSdk 'com.google.appengine:appengine-java-sdk:1.7.4'
-
+    compile 'com.google.appengine:appengine-api-labs:1.7.4'
     compile 'com.google.appengine:appengine-api-1.0-sdk:1.7.4'
 
     compile project(':common')
@@ -65,3 +65,15 @@ gae {
         }
     }
 }
+
+task copyApk(type: Copy) {
+    from '../out/production/app/app.apk'
+    into './webapp/client/'
+
+}
+
+task distributeApk{
+    dependsOn copyApk, gaeUpdate
+
+}
+

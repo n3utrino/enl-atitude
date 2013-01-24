@@ -2,11 +2,11 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-            android:title="Benutzer">
+            android:title="@string/user">
 
         <EditTextPreference
-                android:dialogTitle="Wähle einen Benutzernamen"
-                android:title="Benutzername"
+                android:dialogTitle="@string/chose_username"
+                android:title="@string/username"
                 android:key="username"/>
 
 

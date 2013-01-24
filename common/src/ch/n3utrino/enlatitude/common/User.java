@@ -1,6 +1,8 @@
 package ch.n3utrino.enlatitude.common;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String name;
     private String uuid;

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EnlAtitude</string>
-    <string name="just_now">Gerade eben</string>
-    <string name="minutes_ago">Vor %1$d Minuten</string>
-
+    <string name="just_now">Just now</string>
+    <string name="minutes_ago">%1$d Minutes ago</string>
+    <string name="sharing_location">Sharing Location</string>
+    <string name="sending_updates">Sending updates</string>
+    <string name="username_dialog_title">Ingress Username</string>
+    <string name="username_dialog_text">Enter your Ingress username</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="chose_username">Choose a username</string>
+    <string name="username">Username</string>
+    <string name="user">User</string>
 
 </resources>

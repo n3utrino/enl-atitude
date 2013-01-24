@@ -1,5 +1,7 @@
 package ch.n3utrino.enlatitude.common;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: n3utrino
@@ -7,7 +9,7 @@ package ch.n3utrino.enlatitude.common;
  * Time: 19:30
  * To change this template use File | Settings | File Templates.
  */
-public class Location {
+public class Location implements Serializable {
 
     private double lat;
     private double lon;
