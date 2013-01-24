@@ -10,6 +10,14 @@
                 android:key="username"/>
 
 
+
+        <CheckBoxPreference
+                android:title="@string/settings_proxy_alert"
+                android:summary="@string/settings_proxy_alert_summary"
+                android:key="proxyAlert"
+                android:defaultValue="true"
+                />
     </PreferenceCategory>
+
 
 </PreferenceScreen>

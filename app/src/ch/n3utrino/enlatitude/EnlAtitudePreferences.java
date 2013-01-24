@@ -49,4 +49,8 @@ public class EnlAtitudePreferences {
     public String getUserName(){
         return mPreferences.getString("username","");
     }
+
+    public boolean proxyAlertEnabled() {
+        return mPreferences.getBoolean("proxyAlert",true);
+    }
 }

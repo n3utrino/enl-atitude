@@ -1,18 +1,31 @@
 package ch.n3utrino.enlatitude.services;
 
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import ch.n3utrino.enlatitude.EnlAtitudePreferences;
+import ch.n3utrino.enlatitude.common.User;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class LocationController {
 
     public static final int GPS_FIX_WAIT_TIME = 1*60*1000; //wait one minute to find gps
     private LocationManager mLocationManager;
+    private static final String PROX_ALERT_INTENT = "ch.n3utrino.enlatitude.services.PROXIMITY_ALERT";
     private Context mContext;
     private LocationControllerCallback mCallback;
+    private EnlAtitudePreferences mPrefs;
+
+    private Map<String, PendingIntent> proxyIntents = new HashMap<String,PendingIntent>();
 
     private Location mLastLocation;
 
@@ -52,6 +65,8 @@ public class LocationController {
         mCallback = callback;
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 20, locationListener);
+
+        mPrefs = new EnlAtitudePreferences(mContext);
 
         mGpsStatusListener = new GpsStatus.Listener() {
 
@@ -200,6 +215,31 @@ public class LocationController {
             return provider2 == null;
         }
         return provider1.equals(provider2);
+    }
+
+
+    public void addProximityAlert(User user){
+
+        if(user.getUuid().equals(mPrefs.getUuid()) || !mPrefs.proxyAlertEnabled()){
+            return;
+        }
+
+        PendingIntent pendingIntent = proxyIntents.get(user.getUuid());
+
+        if(pendingIntent != null){
+            mLocationManager.removeProximityAlert(pendingIntent);
+        }
+
+        Intent intent = new Intent(PROX_ALERT_INTENT);
+        intent.putExtra("user",user.getName());
+
+        Random rand = new Random();
+
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this.mContext, rand.nextInt() , intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        proxyIntents.put(user.getUuid(),proximityIntent);
+        mLocationManager.addProximityAlert(user.getLocation().getLat(),user.getLocation().getLon(),200,5*60*1000,proximityIntent);
+
     }
 
 }

@@ -26,4 +26,22 @@ public class NotificationUtil {
         mBuilder.setContentIntent(resultPendingIntent);
         return mBuilder;
     }
+
+    public NotificationCompat.Builder prepareProxyNotification(Context context){
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_stat_ingress)
+                        .setAutoCancel(true)
+                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .setOngoing(false);
+
+        Intent resultIntent = new Intent(context, EnLatitude.class);
+
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        return mBuilder;
+
+    }
 }

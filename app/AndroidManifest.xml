@@ -36,6 +36,11 @@
                 <action android:name="enlatitude.client.android.update"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".services.ProximityIntentReceiver">
+            <intent-filter>
+                <action android:name="ch.n3utrino.enlatitude.services.PROXIMITY_ALERT"/>
+            </intent-filter>
+        </receiver>
 
 
         <meta-data
