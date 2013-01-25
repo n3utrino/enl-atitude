@@ -68,5 +68,10 @@ public class UpdateTrigger extends BroadcastReceiver implements LocationControll
         myBuilder.setNumber(reply.size());
         // mId allows you to update the notification later on.
         mNotificationManager.notify(NotificationUtil.NOTIFICATION_ID, myBuilder.build());
+
+        for(User user:reply.values()){
+            passiveLocationController.addProximityAlert(user);
+        }
+
     }
 }

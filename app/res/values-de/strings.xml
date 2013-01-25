@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EnlAtitude</string>
+    <string name="just_now">Gerade eben</string>
+    <string name="minutes_ago">Vor %1$d Minuten</string>
+    <string name="sharing_location">Position Teilen</string>
+    <string name="sending_updates">Schicke aktualisierungen</string>
+    <string name="username_dialog_title">Ingress Benutzername</string>
+    <string name="username_dialog_text">Gib deinen Ingress Benutzernamen ein</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="chose_username">Wähle einen Benutzernamen</string>
+    <string name="username">Benutzername</string>
+    <string name="user">Benutzer</string>
+    <string name="notification_near">Du bist in der Nähe von</string>
+    <string name="settings_proxy_alert">Annäherungs Alarm</string>
+    <string name="settings_proxy_alert_summary">Einschalten um eine Notifikation zu bekommen wenn ein Spieler in der Nähe ist</string>
+    <string name="settings_proxy_distance">Annäherungs Umkreis</string>
+    <string name="settings_proxy_distance_hint">Wähle die Entfernung in welcher ein Spieler sein muss um den Alarm auszulösen</string>
+
+</resources>

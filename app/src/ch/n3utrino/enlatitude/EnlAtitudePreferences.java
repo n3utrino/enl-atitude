@@ -79,4 +79,12 @@ public class EnlAtitudePreferences {
             return DEFAULT_UPDATE_SPEED_BACKGROUND;
         }
     }
+
+    public boolean proxyAlertEnabled() {
+        return mPreferences.getBoolean("proxyAlert",true);
+    }
+
+    public int getProxyDistance() {
+        return mPreferences.getInt("proxy_distance",200);
+    }
 }

@@ -36,10 +36,15 @@
                 <action android:name="enlatitude.client.android.update"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".services.ProximityIntentReceiver">
+            <intent-filter>
+                <action android:name="ch.n3utrino.enlatitude.services.PROXIMITY_ALERT"/>
+            </intent-filter>
+        </receiver>
 
 
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyBYkVJJSP7xABctNP4HvfW5-bnR8mM-IZc"/>
+                android:value="AIzaSyDpu20gKqmGwVkTdmwx6poYrLvzs4Q8M38"/>
     </application>
 </manifest>

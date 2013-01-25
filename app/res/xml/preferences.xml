@@ -2,11 +2,11 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-            android:title="Benutzer">
+            android:title="@string/user">
 
         <EditTextPreference
-                android:dialogTitle="Wähle einen Benutzernamen"
-                android:title="Benutzername"
+                android:dialogTitle="@string/chose_username"
+                android:title="@string/username"
                 android:key="username"/>
 
     </PreferenceCategory>
@@ -28,6 +28,25 @@
                 android:numeric="integer"
                 android:defaultValue="300"/>
 
+
+        <CheckBoxPreference
+                android:title="@string/settings_proxy_alert"
+                android:summary="@string/settings_proxy_alert_summary"
+                android:key="proxyAlert"
+                android:defaultValue="true"
+                />
+
+        <ListPreference
+                android:key="proxy_distance"
+                android:title="@string/settings_proxy_distance"
+                android:summary="@string/settings_proxy_distance_hint"
+                android:defaultValue="200"
+                android:entries="@array/proxy_distances"
+                android:entryValues="@array/proxy_distances_values"
+                android:dependency="proxyAlert"
+                />
+
     </PreferenceCategory>
+
 
 </PreferenceScreen>

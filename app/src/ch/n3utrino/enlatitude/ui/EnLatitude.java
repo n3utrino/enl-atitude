@@ -165,10 +165,13 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         map.clear();
 
         for (User user : reply.values()) {
+
+            EnLDrawable marker = new EnLDrawable(user,getResources());
+
             map.addMarker(new MarkerOptions().draggable(false)
                     .position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon()))
-                    .title(user.getName())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    .icon(BitmapDescriptorFactory.fromBitmap(marker.getBitmap())));
+
         }
 
     }
@@ -203,14 +206,14 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Ingress Username");
-        alert.setMessage("Enter your Ingress username");
+        alert.setTitle(getString(R.string.username_dialog_title));
+        alert.setMessage(getString(R.string.username_dialog_text));
 
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 EnlAtitudePreferences prefs = new EnlAtitudePreferences(EnLatitude.this);
                 prefs.setUsername(input.getText().toString());
@@ -219,9 +222,9 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                showUsernameSelectDialog();
             }
         });
 

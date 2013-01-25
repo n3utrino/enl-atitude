@@ -1,12 +1,15 @@
 package ch.n3utrino.enlatitude.common;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String name;
     private String uuid;
     private Location location;
 
     private long lastUpdate;
+    private long lastUpdateSince;
 
     public String getName() {
         return name;
@@ -41,4 +44,15 @@ public class User {
     public void setLastUpdate(long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public long getLastUpdateSince() {
+        return lastUpdateSince;
+    }
+
+    public void setLastUpdateSince(long lastUpdate) {
+        this.lastUpdateSince = lastUpdate;
+    }
+
 }
+
+

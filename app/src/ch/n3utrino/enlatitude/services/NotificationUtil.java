@@ -16,8 +16,8 @@ public class NotificationUtil {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_stat_ingress)
-                        .setContentTitle("Sharing Location")
-                        .setContentText("Sending updates").setOngoing(true);
+                        .setContentTitle(context.getString(R.string.sharing_location))
+                        .setContentText(context.getString(R.string.sending_updates)).setOngoing(true);
 
         Intent resultIntent = new Intent(context, EnLatitude.class);
 
@@ -25,5 +25,23 @@ public class NotificationUtil {
 
         mBuilder.setContentIntent(resultPendingIntent);
         return mBuilder;
+    }
+
+    public NotificationCompat.Builder prepareProxyNotification(Context context){
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_stat_ingress)
+                        .setAutoCancel(true)
+                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .setOngoing(false);
+
+        Intent resultIntent = new Intent(context, EnLatitude.class);
+
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        return mBuilder;
+
     }
 }
