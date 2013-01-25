@@ -9,6 +9,24 @@
                 android:title="@string/username"
                 android:key="username"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Aktualisierungshäufigkeit (in Sekunden)">
+
+        <EditTextPreference
+                android:dialogTitle="Zeitspanne in Sekunden"
+                android:title="Aktiv"
+                android:key="updateSpeedForeground"
+                android:numeric="integer"
+                android:defaultValue="20"/>
+
+        <EditTextPreference
+                android:dialogTitle="Zeitspanne in Sekunden"
+                android:title="Hintergrund"
+                android:key="updateSpeedBackground"
+                android:numeric="integer"
+                android:defaultValue="300"/>
 
 
         <CheckBoxPreference

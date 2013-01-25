@@ -29,8 +29,7 @@ public class UpdateService extends Service implements LocationController.Locatio
 
     public static final String UPDATE_ACTION = "enlatitude.client.android.update";
 
-    public static final int FAST_UPDATES = 20000;
-    private int mUpdateSpeed = FAST_UPDATES;
+    private int mUpdateSpeed = -1;
 
     private boolean running = false;
     private boolean keepRunning = true;
@@ -172,18 +171,22 @@ public class UpdateService extends Service implements LocationController.Locatio
     }
 
     public void setMode(Mode mode) {
+        EnlAtitudePreferences prefs = new EnlAtitudePreferences(this);
+
         if (mode == Mode.ACTIVE) {
             running = true;
             mAlarmManager.cancel(alarmManagerPendingIntent);
-            setUpdateSpeed(FAST_UPDATES);
+            int iInterval = prefs.getUpdateSpeedForeground() * 1000;
+            setUpdateSpeed(iInterval);
 
         } else if (mode == Mode.PASSIVE) {
             running = false;
             mLocationController.stop();
 
+            int iInterval = prefs.getUpdateSpeedBackground() * 1000;
             mAlarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime()+2*60*1000, //Trigger in 2 Minutes
-                    5 * 60 * 1000, //Every 5 Minutes
+                    iInterval, //Loop this in intervals defined by UpdateSpeedBackground
                     alarmManagerPendingIntent);
 
         }

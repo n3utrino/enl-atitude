@@ -4,7 +4,7 @@
           android:versionCode="1"
           android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="14"/>
+    <uses-sdk android:targetSdkVersion="14" android:minSdkVersion="14"/>
     <permission
             android:name="ch.n3utrino.enlatitude.permission.MAPS_RECEIVE"
             android:protectionLevel="signature"/>
