@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -65,6 +66,9 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        //Setting default values. See: http://developer.android.com/guide/topics/ui/settings.html#Defaults
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         GoogleMapOptions options = new GoogleMapOptions();
         options.scrollGesturesEnabled(true).zoomControlsEnabled(false).mapType(GoogleMap.MAP_TYPE_NORMAL).compassEnabled(true);
