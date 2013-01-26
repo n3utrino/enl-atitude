@@ -12,24 +12,31 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="Aktualisierungshäufigkeit (in Sekunden)">
+            android:title="@string/update_interval">
 
-        <EditTextPreference
-                android:dialogTitle="Zeitspanne in Sekunden"
-                android:title="Aktiv"
+        <ListPreference
                 android:key="updateSpeedForeground"
-                android:numeric="integer"
-                android:defaultValue="20"/>
+                android:dialogTitle="@string/update_interval_timespan"
+                android:title="@string/update_mode_active"
+                android:defaultValue="20"
+                android:entries="@array/interval_times"
+                android:entryValues="@array/interval_times_values"/>
 
-        <EditTextPreference
-                android:dialogTitle="Zeitspanne in Sekunden"
-                android:title="Hintergrund"
+        <ListPreference
                 android:key="updateSpeedBackground"
-                android:numeric="integer"
-                android:defaultValue="300"/>
+                android:dialogTitle="@string/update_interval_timespan"
+                android:title="@string/update_mode_passive"
+                android:defaultValue="300"
+                android:entries="@array/interval_times"
+                android:entryValues="@array/interval_times_values"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/settings_proxy_alert">
 
         <CheckBoxPreference
+                android:dialogTitle="@string/settings_proxy_alert"
                 android:title="@string/settings_proxy_alert"
                 android:summary="@string/settings_proxy_alert_summary"
                 android:key="proxyAlert"
@@ -38,6 +45,7 @@
 
         <ListPreference
                 android:key="proxy_distance"
+                android:dialogTitle="@string/settings_proxy_distance"
                 android:title="@string/settings_proxy_distance"
                 android:summary="@string/settings_proxy_distance_hint"
                 android:defaultValue="200"
