@@ -15,6 +15,8 @@ public class EnlAtitudePreferences {
     public static final String KEY_PREF_USERNAME = "username";
     public static final String KEY_PREF_UPDATE_SPEED_FOREGROUND = "updateSpeedForeground";
     public static final String KEY_PREF_UPDATE_SPEED_BACKGROUND = "updateSpeedBackground";
+    public static final String KEY_PREF_PROXY_ALERT = "proxyAlert";
+    public static final String KEY_PREF_PROXY_DISTANCE = "proxy_distance";
 
     public static final int    DEFAULT_UPDATE_SPEED_FOREGROUND = 20;    //Also adjust in preferences.xml
     public static final int    DEFAULT_UPDATE_SPEED_BACKGROUND = 300;   //Also adjust in preferences.xml
@@ -81,10 +83,10 @@ public class EnlAtitudePreferences {
     }
 
     public boolean proxyAlertEnabled() {
-        return mPreferences.getBoolean("proxyAlert",true);
+        return mPreferences.getBoolean(KEY_PREF_PROXY_ALERT,true);
     }
 
     public int getProxyDistance() {
-        return mPreferences.getInt("proxy_distance",200);
+        return mPreferences.getInt(KEY_PREF_PROXY_DISTANCE,200);
     }
 }

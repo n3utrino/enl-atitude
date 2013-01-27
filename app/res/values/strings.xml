@@ -12,6 +12,10 @@
     <string name="chose_username">Choose a username</string>
     <string name="username">Username</string>
     <string name="user">User</string>
+    <string name="update_interval">Update Interval</string>
+    <string name="update_interval_timespan">Timespan</string>
+    <string name="update_mode_active">Active</string>
+    <string name="update_mode_passive">Background</string>
     <string name="notification_near">You are near</string>
     <string name="settings_proxy_alert">Proximity Alert</string>
     <string name="settings_proxy_alert_summary">Enable this to get notified if a fellow Ingress player is nearby
