@@ -17,6 +17,7 @@ public class EnlAtitudePreferences {
     public static final String KEY_PREF_UPDATE_SPEED_BACKGROUND = "updateSpeedBackground";
     public static final String KEY_PREF_PROXY_ALERT = "proxyAlert";
     public static final String KEY_PREF_PROXY_DISTANCE = "proxy_distance";
+    public static final String KEY_PREF_LAST_ZOOM = "last_zoom";
 
     public static final int    DEFAULT_UPDATE_SPEED_FOREGROUND = 20;    //Also adjust in preferences.xml
     public static final int    DEFAULT_UPDATE_SPEED_BACKGROUND = 300;   //Also adjust in preferences.xml
@@ -88,5 +89,13 @@ public class EnlAtitudePreferences {
 
     public int getProxyDistance() {
         return mPreferences.getInt(KEY_PREF_PROXY_DISTANCE,200);
+    }
+
+    public void setLastZoom(float lastZoom) {
+        mPreferences.edit().putFloat(KEY_PREF_LAST_ZOOM,lastZoom).commit();
+    }
+
+    public float getLastZoom() {
+        return mPreferences.getFloat(KEY_PREF_LAST_ZOOM,0.0F);
     }
 }
