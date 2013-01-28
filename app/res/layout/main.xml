@@ -7,13 +7,13 @@
           map:cameraZoom="1"
           map:cameraTargetLat="47.493284"
           map:cameraTargetLng="8.499678"
-          map:cameraTilt="30"
+          map:cameraTilt="0"
           map:mapType="normal"
           map:uiCompass="true"
           map:uiRotateGestures="true"
           map:uiScrollGestures="true"
-          map:uiTiltGestures="true"
-          map:uiZoomControls="false"
+          map:uiTiltGestures="false"
+          map:uiZoomControls="true"
           map:uiZoomGestures="true"
           class="com.google.android.gms.maps.MapFragment"/>
 

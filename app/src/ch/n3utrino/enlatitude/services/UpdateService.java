@@ -185,7 +185,7 @@ public class UpdateService extends Service implements LocationController.Locatio
 
             int iInterval = prefs.getUpdateSpeedBackground() * 1000;
             mAlarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime()+2*60*1000, //Trigger in 2 Minutes
+                    SystemClock.elapsedRealtime()+iInterval, //Trigger in 2 Minutes
                     iInterval, //Loop this in intervals defined by UpdateSpeedBackground
                     alarmManagerPendingIntent);
 

@@ -28,12 +28,11 @@ public class UpdateTrigger extends BroadcastReceiver implements LocationControll
 
         mContext = context;
 
-
-        mUpdateController = new UpdateController(this,new EnlAtitudePreferences(mContext).buildUserData());
+        EnlAtitudePreferences prefs = new EnlAtitudePreferences(mContext);
+        mUpdateController = new UpdateController(this,prefs.buildUserData());
         passiveLocationController = new LocationController(context,this);
 
-        //Wait for 60 seconds stop after that.
-
+        //Wait for 60 seconds or 200 ms more than the update speed stop after that.
         //TODO: if the alarmmanager gets stopped while this is running, the event gets rescheduled. need to handle this
         Handler stopHandler = new Handler();
         stopHandler.postDelayed(new Runnable() {
@@ -42,7 +41,7 @@ public class UpdateTrigger extends BroadcastReceiver implements LocationControll
                 mUpdateController.update(mLastLocation);
                 passiveLocationController.stop();
             }
-        },60000);
+        },Math.min(60000,(prefs.getUpdateSpeedBackground()*1000)+200));
 
     }
 

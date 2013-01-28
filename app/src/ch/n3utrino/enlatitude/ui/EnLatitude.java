@@ -15,10 +15,7 @@ import ch.n3utrino.enlatitude.EnlAtitudePreferences;
 import ch.n3utrino.enlatitude.R;
 import ch.n3utrino.enlatitude.common.User;
 import ch.n3utrino.enlatitude.services.UpdateService;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -29,7 +26,7 @@ import java.util.Map;
 public class EnLatitude extends Activity implements UpdateService.LocationUpdateListener {
 
     private static final String CAMERA_POSITION = "cameraPosition";
-    private GoogleMap map;
+    private GoogleMap mMap;
     private boolean ready = true;
 
 
@@ -73,9 +70,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         GoogleMapOptions options = new GoogleMapOptions();
         options.scrollGesturesEnabled(true).zoomControlsEnabled(false).mapType(GoogleMap.MAP_TYPE_NORMAL).compassEnabled(true);
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
-        map.setMyLocationEnabled(true);
 
         if(savedInstanceState != null){
             mCameraPosition = (CameraPosition) savedInstanceState.get(CAMERA_POSITION);
@@ -88,24 +83,34 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
             ready = false;
         }
 
-        Handler mapZoomHandler = new Handler();
-
-        mapZoomHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Location loc = map.getMyLocation();
-
-                if (loc != null) {
-                    LatLng myLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(15).build();
-
-                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }
-            }
+        MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+        if (savedInstanceState == null) {
+            mapFragment.setRetainInstance(true);
+        } else {
+            mMap = mapFragment.getMap();
         }
 
-                , 2000);
+
+        setUpMapIfNeeded();
+
+        Handler mapZoomHandler = new Handler();
+
+//        mapZoomHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                Location loc = mMap.getMyLocation();
+//
+//                if (loc != null) {
+//                    LatLng myLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+//                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(15).build();
+//
+//                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                }
+//            }
+//        }
+//
+//                , 2000);
 
     }
 
@@ -162,13 +167,13 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     public void onLocationUpdate(Map<String, User> reply) {
 
-        map.clear();
+        mMap.clear();
 
         for (User user : reply.values()) {
 
             EnLDrawable marker = new EnLDrawable(user,getResources());
 
-            map.addMarker(new MarkerOptions().draggable(false)
+            mMap.addMarker(new MarkerOptions().draggable(false)
                     .position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon()))
                     .icon(BitmapDescriptorFactory.fromBitmap(marker.getBitmap())));
 
@@ -184,7 +189,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         }
 
         if(mCameraPosition != null){
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
         }
     }
 
@@ -237,7 +242,22 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelable(CAMERA_POSITION, map.getCameraPosition());
+        outState.putParcelable(CAMERA_POSITION, mMap.getCameraPosition());
+
+
+    }
+
+    private void setUpMapIfNeeded() {
+
+        if (mMap == null) {
+            mMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
+        }
+        if (mMap != null) {
+
+            mMap.setMyLocationEnabled(true);
+            mMap.setTrafficEnabled(false);
+
+        }
 
 
     }

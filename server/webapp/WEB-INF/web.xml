@@ -11,6 +11,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>ch.n3utrino.enlatitude.server.resources</param-value>
         </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+            <param-value>com.sun.jersey.api.container.filter.GZIPContentEncodingFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>com.sun.jersey.api.container.filter.GZIPContentEncodingFilter</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
