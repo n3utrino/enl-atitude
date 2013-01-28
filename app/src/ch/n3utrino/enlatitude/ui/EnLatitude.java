@@ -3,7 +3,9 @@ package ch.n3utrino.enlatitude.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -23,7 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Map;
 
-public class EnLatitude extends Activity implements UpdateService.LocationUpdateListener {
+public class EnLatitude extends Activity implements UpdateService.LocationUpdateListener, GoogleMap.OnCameraChangeListener {
 
     private static final String CAMERA_POSITION = "cameraPosition";
     private GoogleMap mMap;
@@ -247,16 +249,42 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
     }
 
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+        mPreferences.setLastZoom(cameraPosition.zoom);
+    }
+
     private void setUpMapIfNeeded() {
 
         if (mMap == null) {
             mMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
         }
         if (mMap != null) {
+            mMap.setOnCameraChangeListener(this);
 
             mMap.setMyLocationEnabled(true);
             mMap.setTrafficEnabled(false);
 
+            float fLastZoom = mPreferences.getLastZoom();
+            if (fLastZoom > 0.0F) {
+                LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+                criteria.setAltitudeRequired(false);
+                criteria.setBearingRequired(false);
+                criteria.setCostAllowed(true);
+                criteria.setPowerRequirement(Criteria.POWER_LOW);
+                String provider = locationManager.getBestProvider(criteria, true);
+                Location location = locationManager.getLastKnownLocation(provider);
+
+                if (location == null) {
+                    mMap.moveCamera(CameraUpdateFactory.zoomTo(fLastZoom));
+                }
+                else {
+                    LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,fLastZoom));
+                }
+            }
         }
 
 
