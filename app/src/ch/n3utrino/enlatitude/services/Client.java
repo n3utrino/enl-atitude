@@ -28,12 +28,12 @@ public class Client<T> {
 
     public T connect(Object body) {
 
-        return (T)myGson.fromJson(connect(resourceUrl, body),responseType);
+        return (T) myGson.fromJson(connect(resourceUrl, body), responseType);
     }
 
     private String connect(URL resourceUrl, Object body) {
 
-        GZIPInputStream in = null;
+        InputStream in = null;
         BufferedOutputStream out = null;
         Log.d("RestClient", resourceUrl.toString());
         try {
@@ -41,7 +41,7 @@ public class Client<T> {
             URLConnection urlConnection = resourceUrl.openConnection();
             urlConnection.setRequestProperty("Accept-Encoding", "gzip");
             urlConnection.setRequestProperty("User-Agent", FAKE_BROWSER);
-            if(body != null){
+            if (body != null) {
                 urlConnection.setDoOutput(true);
                 urlConnection.setDoInput(true);
                 out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -54,8 +54,15 @@ public class Client<T> {
                 urlConnection.connect();
             }
 
+            BufferedInputStream temp = new BufferedInputStream(urlConnection.getInputStream());
+            temp.mark(1);
 
-            in = new GZIPInputStream(urlConnection.getInputStream());
+            try {
+                in = new GZIPInputStream(temp);
+            } catch (IOException ignore) {
+                temp.reset();
+                in = temp;
+            }
             return readStream(in);
 
         } catch (IOException e) {
@@ -73,7 +80,7 @@ public class Client<T> {
     }
 
 
-    public static String readStream(GZIPInputStream in) throws IOException {
+    public static String readStream(InputStream in) throws IOException {
 
         StringBuilder builder = new StringBuilder();
 

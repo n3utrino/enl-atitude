@@ -21,5 +21,6 @@
     <string name="settings_proxy_alert_summary">Einschalten um eine Notifikation zu bekommen wenn ein Spieler in der Nähe ist</string>
     <string name="settings_proxy_distance">Annäherungs Umkreis</string>
     <string name="settings_proxy_distance_hint">Wähle die Entfernung in welcher ein Spieler sein muss um den Alarm auszulösen</string>
+    <string name="newbie_ground">Newbie Ground</string>
 
 </resources>

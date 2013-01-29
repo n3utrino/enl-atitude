@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import ch.n3utrino.enlatitude.common.User;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.gson.Gson;
 
 import java.util.UUID;
 
@@ -22,6 +24,7 @@ public class EnlAtitudePreferences {
     public static final int    DEFAULT_UPDATE_SPEED_BACKGROUND = 300;   //Also adjust in preferences.xml
 
     private SharedPreferences mPreferences;
+    public static final String CAMERA_POS = "cameraPos";
 
     public EnlAtitudePreferences(Context mContext) {
         this.mPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -70,7 +73,7 @@ public class EnlAtitudePreferences {
     }
 
     public void setUpdateSpeedBackground(int seconds) {
-        mPreferences.edit().putInt(KEY_PREF_UPDATE_SPEED_BACKGROUND,seconds).commit();
+        mPreferences.edit().putInt(KEY_PREF_UPDATE_SPEED_BACKGROUND, seconds).commit();
     }
 
     public int getUpdateSpeedBackground() {
@@ -87,6 +90,14 @@ public class EnlAtitudePreferences {
     }
 
     public int getProxyDistance() {
-        return mPreferences.getInt(KEY_PREF_PROXY_DISTANCE,200);
+        return Integer.parseInt(mPreferences.getString(KEY_PREF_PROXY_DISTANCE,"200"));
+    }
+
+    public CameraPosition getCamera(){
+        return new Gson().fromJson(mPreferences.getString(CAMERA_POS,""),CameraPosition.class);
+    }
+
+    public void saveCamera(CameraPosition cameraPosition) {
+        mPreferences.edit().putString(CAMERA_POS, new Gson().toJson(cameraPosition)).commit();
     }
 }

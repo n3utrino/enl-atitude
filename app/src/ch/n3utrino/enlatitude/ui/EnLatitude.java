@@ -3,7 +3,6 @@ package ch.n3utrino.enlatitude.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -15,11 +14,11 @@ import ch.n3utrino.enlatitude.EnlAtitudePreferences;
 import ch.n3utrino.enlatitude.R;
 import ch.n3utrino.enlatitude.common.User;
 import ch.n3utrino.enlatitude.services.UpdateService;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.*;
 
 import java.util.Map;
 
@@ -71,8 +70,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         options.scrollGesturesEnabled(true).zoomControlsEnabled(false).mapType(GoogleMap.MAP_TYPE_NORMAL).compassEnabled(true);
 
 
-
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             mCameraPosition = (CameraPosition) savedInstanceState.get(CAMERA_POSITION);
         }
 
@@ -86,12 +84,16 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         if (savedInstanceState == null) {
             mapFragment.setRetainInstance(true);
+
+
         } else {
+
             mMap = mapFragment.getMap();
         }
 
-
         setUpMapIfNeeded();
+
+
 
         Handler mapZoomHandler = new Handler();
 
@@ -117,7 +119,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
 
         return true;
 
@@ -135,9 +137,9 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
         }
     }
 
-    private void openSettings(){
+    private void openSettings() {
         mUpdateService.stopUpdates();
-        this.startActivity(new Intent(this,SettingsActivity.class));
+        this.startActivity(new Intent(this, SettingsActivity.class));
     }
 
     private void doBindService() {
@@ -169,15 +171,19 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
         mMap.clear();
 
+        addPolygons();
         for (User user : reply.values()) {
 
-            EnLDrawable marker = new EnLDrawable(user,getResources());
+            EnLDrawable marker = new EnLDrawable(user, getResources());
 
             mMap.addMarker(new MarkerOptions().draggable(false)
                     .position(new LatLng(user.getLocation().getLat(), user.getLocation().getLon()))
                     .icon(BitmapDescriptorFactory.fromBitmap(marker.getBitmap())));
 
+
         }
+
+
 
     }
 
@@ -188,7 +194,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
             doBindService();
         }
 
-        if(mCameraPosition != null){
+        if (mCameraPosition != null) {
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
         }
     }
@@ -202,7 +208,7 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(mUpdateService != null){
+        if (mUpdateService != null) {
             mUpdateService.stopUpdates();
         }
     }
@@ -241,16 +247,14 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        outState.putParcelable(CAMERA_POSITION, mMap.getCameraPosition());
-
+        mPreferences.saveCamera(mMap.getCameraPosition());
 
     }
 
     private void setUpMapIfNeeded() {
 
         if (mMap == null) {
-            mMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         }
         if (mMap != null) {
 
@@ -259,6 +263,37 @@ public class EnLatitude extends Activity implements UpdateService.LocationUpdate
 
         }
 
+        if (mPreferences.getCamera() != null) {
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(mPreferences.getCamera()));
+        }
 
+    }
+
+    private void addPolygons() {
+        PolygonOptions newbieGround = new PolygonOptions().add(
+                new LatLng(47.388517, 8.519585),
+                new LatLng(47.388016, 8.520476),
+                new LatLng(47.389265, 8.52172),
+                new LatLng(47.390674, 8.523008),
+                new LatLng(47.391822, 8.525282),
+                new LatLng(47.392722, 8.523233),
+                new LatLng(47.391161, 8.522203)
+
+
+        );
+
+        newbieGround.strokeColor(0x8800FF00);
+        newbieGround.fillColor(0x8800FF00);
+
+
+        MarkerOptions newbieMarker = new MarkerOptions()
+                .title(getString(R.string.newbie_ground))
+                .position(new LatLng(47.390006,8.521731))
+                .snippet(getString(R.string.max_lvl_portals))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                .draggable(false);
+
+        mMap.addPolygon(newbieGround);
+        mMap.addMarker(newbieMarker);
     }
 }

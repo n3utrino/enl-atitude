@@ -22,5 +22,7 @@
     </string>
     <string name="settings_proxy_distance">Alert distance</string>
     <string name="settings_proxy_distance_hint">Choose the distance to trigger the proximity alert</string>
+    <string name="newbie_ground">Newbie Ground</string>
+    <string name="max_lvl_portals">Max Portal Lvl 4</string>
 
 </resources>
